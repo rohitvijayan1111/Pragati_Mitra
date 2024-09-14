@@ -265,6 +265,14 @@ function OtherFormsRecords() {
         {role === 'hod' && <div className="col">
           <button type="button" onClick={handleAdd} className="search-button">Add Records</button>
         </div>}
+        <div className="col">
+          <button type="button" onClick={()=>{}} className="bttexport">Import Excel</button>
+        </div>
+        <div className="col">
+                  <button type="button" onClick={()=>{}} className="bttexport">Import DB</button>
+        
+        </div>
+
       </div>
 
       {data && (
