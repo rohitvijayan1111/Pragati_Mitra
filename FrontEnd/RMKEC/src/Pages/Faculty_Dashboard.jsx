@@ -54,7 +54,7 @@ const Faculty_Dashboard = () => {
 
         <GraphCard>
           <CardHeader>Student Performance</CardHeader>
-          <Bar data={performanceData} />
+          <Bar data={performanceData} height={300} />
         </GraphCard>
 
         <GraphCard>
