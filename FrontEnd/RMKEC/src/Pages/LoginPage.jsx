@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
-import logo from '../assets/Logo.png';
+import logo from '../assets/pragati.png';
 import axios from 'axios';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import refresh from '../assets/refresh.png';
@@ -98,8 +98,11 @@ function LoginPage() {
   return (
     <div className='loginpage'>
       <div className="login-form">
-        <div className="flower-logo">
-          <img src={logo} alt="Logo" />
+      <div className="flower-logo">
+          <img src={logo} alt="Logo"/>
+          <p className='logo' style={{ textDecoration: 'none' }}>
+            <div>PRAGATI MITRA</div>
+          </p>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">

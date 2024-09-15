@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
-import logo from '../assets/Logo.png';
+import logo from '../assets/pragati.png';
 import axios from 'axios';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
@@ -75,15 +75,19 @@ function DefaultLogin() {
     <div className='loginpage'>
       <div className="login-form">
         <div className="flower-logo">
-          <img src={logo} alt="Logo" />
+          <img src={logo} alt="Logo"/>
+          <p className='logo' style={{ textDecoration: 'none' }}>
+            <div>PRAGATI MITRA</div>
+          </p>
         </div>
         <div className="login-buttons">
           <button className="btn"  style={{
-    background: 'linear-gradient(90deg, #1e3c72, #2a5298)',
-    color: 'white',
+    background: 'rgba(244, 244, 244, 0.9)',
+    color: '#164863',
     border: 'none',
     padding: '12px 24px',
     fontSize: '16px',
+    fontWeight:'700',
     borderRadius: '8px',
     cursor: 'pointer',
     boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
@@ -92,13 +96,14 @@ function DefaultLogin() {
     width: '100%',
     textAlign: 'center'
   }}
-  onMouseOver={(e) => (e.target.style.background = 'linear-gradient(90deg, #2a5298, #1e3c72)')}
-  onMouseOut={(e) => (e.target.style.background = 'linear-gradient(90deg, #1e3c72, #2a5298)')} onClick={() => handleLogin('student')}>Student Login</button>
+  onMouseOver={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')}
+  onMouseOut={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')} onClick={() => handleLogin('student')}>Student Login</button>
           <button className="btn"  style={{
-    background: 'linear-gradient(90deg, #1e3c72, #2a5298)',
-    color: 'white',
+    background: 'rgba(244, 244, 244, 0.9)',
+    color: '#164863',
     border: 'none',
     padding: '12px 24px',
+    fontWeight:'700',
     fontSize: '16px',
     borderRadius: '8px',
     cursor: 'pointer',
@@ -108,13 +113,14 @@ function DefaultLogin() {
     width: '100%',
     textAlign: 'center'
   }}
-  onMouseOver={(e) => (e.target.style.background = 'linear-gradient(90deg, #2a5298, #1e3c72)')}
-  onMouseOut={(e) => (e.target.style.background = 'linear-gradient(90deg, #1e3c72, #2a5298)')} onClick={() => handleLogin('hod')}>HOD Login</button>
+  onMouseOver={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')}
+  onMouseOut={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')} onClick={() => handleLogin('hod')}>HOD Login</button>
           <button className="btn"  style={{
-    background: 'linear-gradient(90deg, #1e3c72, #2a5298)',
-    color: 'white',
+    background: 'rgba(244, 244, 244, 0.9)',
+    color: '#164863',
     border: 'none',
     padding: '12px 24px',
+    fontWeight:'700',
     fontSize: '16px',
     borderRadius: '8px',
     cursor: 'pointer',
@@ -124,13 +130,14 @@ function DefaultLogin() {
     width: '100%',
     textAlign: 'center'
   }}
-  onMouseOver={(e) => (e.target.style.background = 'linear-gradient(90deg, #2a5298, #1e3c72)')}
-  onMouseOut={(e) => (e.target.style.background = 'linear-gradient(90deg, #1e3c72, #2a5298)')} onClick={() => handleLogin('faculty')}>Faculty Login</button>
+  onMouseOver={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')}
+  onMouseOut={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')} onClick={() => handleLogin('faculty')}>Faculty Login</button>
           <button className="btn"  style={{
-    background: 'linear-gradient(90deg, #1e3c72, #2a5298)',
-    color: 'white',
+    background: 'rgba(244, 244, 244, 0.9)',
+    color: '#164863',
     border: 'none',
     padding: '12px 24px',
+    fontWeight:'700',
     fontSize: '16px',
     borderRadius: '8px',
     cursor: 'pointer',
@@ -140,11 +147,12 @@ function DefaultLogin() {
     width: '100%',
     textAlign: 'center'
   }}
-  onMouseOver={(e) => (e.target.style.background = 'linear-gradient(90deg, #2a5298, #1e3c72)')}
-  onMouseOut={(e) => (e.target.style.background = 'linear-gradient(90deg, #1e3c72, #2a5298)')} onClick={() => handleLogin('infrastructure')}>Infrastructure Login</button>
+  onMouseOver={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')}
+  onMouseOut={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')} onClick={() => handleLogin('infrastructure')}>Infrastructure Login</button>
           <button className="btn"  style={{
-    background: 'linear-gradient(90deg, #1e3c72, #2a5298)',
-    color: 'white',
+    background: 'rgba(244, 244, 244, 0.9)',
+    color: '#164863',
+    fontWeight:'700',
     border: 'none',
     padding: '12px 24px',
     fontSize: '16px',
@@ -156,8 +164,8 @@ function DefaultLogin() {
     width: '100%',
     textAlign: 'center'
   }}
-  onMouseOver={(e) => (e.target.style.background = 'linear-gradient(90deg, #2a5298, #1e3c72)')}
-  onMouseOut={(e) => (e.target.style.background = 'linear-gradient(90deg, #1e3c72, #2a5298)')} onClick={() => handleLogin('finance')}>Finance Login</button>
+  onMouseOver={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')}
+  onMouseOut={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')} onClick={() => handleLogin('finance')}>Finance Login</button>
         </div>
       </div>
       <ToastContainer />

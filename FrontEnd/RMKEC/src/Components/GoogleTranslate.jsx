@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 const GoogleTranslate = () => {
   useEffect(() => {
+    // Check if the script is already added
     const existingScript = document.getElementById('google-translate-script');
     if (!existingScript) {
       const script = document.createElement('script');
@@ -12,20 +13,44 @@ const GoogleTranslate = () => {
       document.body.appendChild(script);
     }
 
+    // Function to apply custom styles to the Google Translate dropdown
+    const applyCustomStyles = () => {
+      const translateFrame = document.querySelector('.goog-te-menu-frame');
+      if (translateFrame) {
+        const frameDocument = translateFrame.contentDocument || translateFrame.contentWindow.document;
+        const style = document.createElement('style');
+        style.textContent = `
+          .goog-te-menu-frame {
+            border: 2px solid #333 !important;
+          }
+          .goog-te-menu2 {
+            background-color: #f0f0f0 !important;
+          }
+        `;
+        frameDocument.head.appendChild(style);
+      }
+    };
+
+    // Function to hide the language dropdown after a language is selected
+    const hideLanguageDropdown = () => {
+      const selectedLanguage = document.querySelector('.goog-te-menu2-item-selected');
+      if (selectedLanguage) {
+        const translateElement = document.getElementById('google_translate_element');
+        if (translateElement) {
+          translateElement.style.display = 'none';  // Hide the dropdown
+        }
+      }
+    };
+
+    // Observe when a language is selected and hide the dropdown
     const observeLanguageChange = () => {
       const translateFrame = document.querySelector('.goog-te-menu-frame');
 
       if (translateFrame) {
-        // Create an observer to detect changes in the menu frame
         const observer = new MutationObserver((mutations) => {
           for (const mutation of mutations) {
             if (mutation.type === 'childList') {
-              const selectedLanguage = document.querySelector('.goog-te-menu2-item-selected');
-              if (selectedLanguage) {
-                document.body.classList.add('translate-active');
-              } else {
-                document.body.classList.remove('translate-active');
-              }
+              hideLanguageDropdown();  // Hide the dropdown once language is selected
             }
           }
         });
@@ -34,6 +59,7 @@ const GoogleTranslate = () => {
       }
     };
 
+    // Initialize Google Translate
     window.googleTranslateElementInit = function() {
       new window.google.translate.TranslateElement(
         {
@@ -44,15 +70,18 @@ const GoogleTranslate = () => {
         'google_translate_element'
       );
 
-      // Wait for the Translate widget to be fully initialized before observing
-      setTimeout(observeLanguageChange, 1000);
+      // Wait for the Translate widget to be fully initialized before applying styles
+      setTimeout(() => {
+        applyCustomStyles();
+        observeLanguageChange(); // Start observing changes
+      }, 2000);
     };
 
+    // Cleanup function
     return () => {
       if (existingScript) {
         document.body.removeChild(existingScript);
       }
-      document.body.classList.remove('translate-active');
     };
   }, []);
 

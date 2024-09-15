@@ -1,6 +1,7 @@
 import React from 'react'
 import './NavBar.css'
 import logo from '../assets/RMK.png'
+import pragati from '../assets/pragati.png'
 import { getTokenData } from '../Pages/authUtils';
 import GoogleTranslate from './GoogleTranslate';
 //import logout from '../assets/logout.png'
@@ -23,10 +24,10 @@ function NavBar() {
   return (
       <header className='header'>
       <nav className='left'>
-        <img src={logo} width="50px" height="70px" alt="Logo" />
-        <a href='/dashboard' className='logo' style={{ textDecoration: 'none' }}>
-        <div>R.M.K. Engineering College</div>
-        <div className='cls'>(AN AUTONOMOUS INSTITUTE)</div>
+        <img src={pragati} width="50px" height="70px" alt="Logo" />
+        <a href='/dashboard' className='logo-nav' style={{ textDecoration: 'none' }}>
+        <div>PRAGATI MITRA</div>
+        <div className='cls'>Simplifying Data, Amplifying Progress</div>
         </a>
 
       </nav>

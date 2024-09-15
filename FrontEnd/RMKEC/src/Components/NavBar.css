@@ -12,18 +12,18 @@
     color: aliceblue;
     z-index: 100;
 }
-.logo
+.logo-nav
 {
     color: aliceblue;
     font-weight: 700;
-    font-size: 30px;
+    font-size: 32px;
     margin-top: -1px;
 }
 
 .cls
 {
     position: relative;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: aliceblue;
     margin-top: -4px;

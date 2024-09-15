@@ -1,0 +1,12 @@
+/* Target the Google Translate dropdown if it's in the main DOM */
+.goog-te-menu-frame {
+    border: 2px solid #333;
+    font-size: 30px; /* Example of changing border */
+  }
+  
+  .goog-te-menu2 {
+    background-color: #f0f0f0; /* Example of changing background color */
+    font-size: 30px; /* Example of changing border */
+
+  }
+  
