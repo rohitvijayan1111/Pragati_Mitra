@@ -10,7 +10,6 @@ import { IconContext } from 'react-icons';
 import { utils, writeFile } from 'xlsx';
 import './OtherFormsRecords.css';
 import { getTokenData } from '../Pages/authUtils';
-
 function OtherFormsRecords() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -252,7 +251,6 @@ function OtherFormsRecords() {
             onChange={(e) => setSearchValue(e.target.value)}
           />
         </div>
-
         <div className="col">
           <button type="button" onClick={handleSearch} className="search-button">Search</button>
           <button type="button" onClick={resetSearch} className="bttreset">Reset</button>
@@ -272,7 +270,19 @@ function OtherFormsRecords() {
                   <button type="button" onClick={()=>{}} className="bttexport">Import DB</button>
         
         </div>
-
+        <div className="container mt-3">
+      <div className="row">
+        <div className="col-md-6">
+          <label htmlFor="exampleDropdown" className="form-label">Select Version Control</label>
+          <select id="exampleDropdown" className="form-select">
+            <option value="" disabled>Select Version Control</option>
+            <option value="option1">V1</option>
+            <option value="option2">V2</option>
+            <option value="option3">V3</option>
+          </select>
+        </div>
+      </div>
+    </div>
       </div>
 
       {data && (

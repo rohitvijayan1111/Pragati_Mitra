@@ -9,6 +9,8 @@ import HallBooking_SideBar from "../HallBooking_Component/HallBooking_SideBar";
 import { getTokenData } from "../Pages/authUtils";
 import SideBar_Student from "../Pages/SideBar_Student";
 import SideBar_Infra from "../Pages/SideBar_Infra";
+import SideBar_Faculty from "../Pages/Sidebar_Faculty";
+import Finance_Sidebar from "../Pages/Finance_Sidebar";
 const Layout = () => {
     const tokenData=getTokenData();
     let user = tokenData.role;
@@ -27,8 +29,10 @@ const Layout = () => {
       {user=== 'Attendance Manager' && <Attendance_SideBar/>}
       {user === 'Event Coordinator' && <HallBooking_SideBar/>}
       {user==='Student' && <SideBar_Student/>}
+      {user==='Faculty' && <SideBar_Faculty/>}
       {user==="Infrastructure Coordinator" && <SideBar_Infra/>}
-      {user !== 'Event Coordinator' && user!== 'Attendance Manager' && user!=="Student" && user!=="Infrastructure Coordinator" && <SideBar/>}
+      {user==="Finance Coordinator" && <Finance_Sidebar/>}
+      {user !== 'Event Coordinator' && user!=="Finance Coordinator" && user!== 'Attendance Manager' && user!=="Student"  && user!=="Faculty"  && user!=="Infrastructure Coordinator" && <SideBar/>}
                 </aside>
                 <div className="pr">
                     <Navigation/>

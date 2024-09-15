@@ -12,7 +12,7 @@ function DefaultLogin() {
   const users = {
     student: { username: 'Student', password: '123' },
     hod: { username: 'broh22012.it@rmkec.ac.in', password: 'pass123' },
-    faculty: { username: 'faculty_user', password: 'faculty_pass' },
+    faculty: { username: 'Faculty', password: '123' },
     infrastructure: { username: 'infrastructure coordinator', password: '123' },
     finance: { username: 'finance', password: '123' },
   };
