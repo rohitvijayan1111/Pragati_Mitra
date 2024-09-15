@@ -264,17 +264,47 @@ function OtherFormsRecords() {
           <button type="button" onClick={handleAdd} className="search-button">Add Records</button>
         </div>}
         <div className="col">
-          <button type="button" onClick={()=>{}} className="bttexport">Import Excel</button>
+          <button type="button" onClick={()=>{toast.info('This feature hasn’t been built yet', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Zoom
+    });}} className="bttexport">Import Excel</button>
         </div>
         <div className="col">
-                  <button type="button" onClick={()=>{}} className="bttexport">Import DB</button>
+                  <button type="button" onClick={()=>{toast.info('This feature hasn’t been built yet', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Zoom
+    });}} className="bttexport">Import DB</button>
         
         </div>
         <div className="container mt-3">
       <div className="row">
         <div className="col-md-6">
           <label htmlFor="exampleDropdown" className="form-label">Select Version Control</label>
-          <select id="exampleDropdown" className="form-select">
+          <select id="exampleDropdown" className="form-select" onChange={()=>{toast.info('This feature hasn’t been built yet', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Zoom
+    });}}>
             <option value="" disabled>Select Version Control</option>
             <option value="option1">V1</option>
             <option value="option2">V2</option>

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { ToastContainer, toast, Zoom } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Styled Components for Form
 const FormContainer = styled.div`
@@ -88,11 +90,21 @@ const StudentAchievementForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here (e.g., save to backend)
-    console.log('Student Data Submitted:', formData);
+    // Show a notification with react-toastify
+    toast.info('This feature hasn’t been built yet', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Zoom
+    });
 
-    // Navigate to another page or back to the table after submission
-    navigate('/');
+    
+    setTimeout(()=>navigate('/dashboard'),3000); // Uncomment if you want to navigate
   };
 
   return (
@@ -199,10 +211,12 @@ const StudentAchievementForm = () => {
         </FormField>
 
         <SubmitButton type="submit">Submit</SubmitButton>
-        <CancelButton type="button" onClick={() => navigate('/')}>
+        <CancelButton type="button" onClick={() => navigate('/')} >
           Cancel
         </CancelButton>
       </form>
+      {/* ToastContainer to display the toast notifications */}
+      <ToastContainer />
     </FormContainer>
   );
 };

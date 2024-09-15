@@ -30,8 +30,8 @@ function SideBar_Faculty() {
             Dashboard
           </Link>
         </li>
-        <li className={isActive('/dashboard/Student-achievement')}>
-          <Link to="/dashboard/Student-achievement">
+        <li className={isActive('/dashboard/Student-achievement-table')}>
+          <Link to="/dashboard/Student-achievement-table">
             <img src={student} width="40px" height="40px" alt="Faculty Details" />
             Students<br/>Achievement
           </Link>

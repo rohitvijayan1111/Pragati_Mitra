@@ -52,6 +52,7 @@ import ReportGeneration from "./Pages/Reportgenaration";
 import Documents from "./Pages/Reportgenaration";
 import SetDeadlinePage from "./Components/SetDeadlinePage";
 import DefaultLogin from "./Pages/DefaultLogin";
+import StudentAchievementTable from "./Pages/StudentAchievementTable";
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -90,6 +91,7 @@ function App() {
               <Route path="financial-statement" element={<FinancialStatementForm/>} />
               <Route path="faculty-table/add-faculty-details" element={<AddFacultyForm/>} />
               <Route path="Student-achievement" element={<StudentAchievementForm/>}/>
+              <Route path="Student-achievement-table" element={<StudentAchievementTable/>}/>             
               <Route path="Infrastructure" element={<InfraForm/>}/>
               {/* <Route path="view-other-forms" element={<ViewOtherForms />} />
               <Route path="view-other-forms/new-form" element={<CreateNewForm/>} />

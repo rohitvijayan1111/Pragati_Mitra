@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { ToastContainer, toast, Zoom } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Styled Components for Form
 const FormContainer = styled.div`
@@ -86,11 +88,20 @@ const AddFacultyForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can handle form submission here (e.g., save to backend or local state)
-    console.log('Form Submitted:', formData);
+    toast.info('This feature hasn’t been built yet', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Zoom
+    });
 
     // After submission, navigate back to the faculty table page
-    navigate('/');
+    setTimeout(()=>navigate('/dashboard'),3000);
   };
 
   return (
@@ -191,6 +202,7 @@ const AddFacultyForm = () => {
           Cancel
         </CancelButton>
       </form>
+      <ToastContainer />
     </FormContainer>
   );
 };
