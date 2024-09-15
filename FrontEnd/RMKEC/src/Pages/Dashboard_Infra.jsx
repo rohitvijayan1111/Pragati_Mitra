@@ -17,17 +17,16 @@ ChartJS.register(
 
 // Styled Components for the dashboard_Infra
 const Dashboard_InfraContainer = styled.div`
-  padding: 20px;
+  padding: 0px 20px 20px 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background-color: #f7f7f7;
   min-height: 100vh;
 `;
 
 const Title = styled.h1`
   font-size: 2.5rem;
-  color: #2c3e50;
+  color: #164863;
   text-align: center;
 `;
 
@@ -50,23 +49,24 @@ const Card = styled.div`
 
 const CardTitle = styled.h3`
   font-size: 1.2rem;
-  color: #34495e;
+  color: #164863;
 `;
 
 const CardValue = styled.p`
   font-size: 2rem;
-  color: #3498db;
+  color: #164863;
 `;
 
 const DataContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  flex-direction: space-between;
+  gap: 220px;
+  margin-left:180px;
 `;
 
 const SectionTitle = styled.h2`
   font-size: 1.8rem;
-  color: #2c3e50;
+  color: #164863;
   margin-bottom: 10px;
 `;
 
@@ -75,8 +75,8 @@ const ChartContainer = styled.div`
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-height: 500px; /* Adjust height */
-  max-width: 800px;  /* Adjust width */
+  height: 300px; /* Adjust height */
+  width: 400px;  /* Adjust width */
   margin: auto;      /* Center align */
 `;
 
@@ -135,16 +135,21 @@ const Dashboard_Infra = () => {
       {/* Data Collection and Visualization */}
       <DataContainer>
         {/* Building Maintenance Chart */}
-        <SectionTitle>Building Maintenance Status</SectionTitle>
-        <ChartContainer>
-          <Bar data={buildingMaintenanceData} />
-        </ChartContainer>
+        <div>
+          <SectionTitle>Building Maintenance Status</SectionTitle>
+          <ChartContainer>
+            <Bar width="200px" data={buildingMaintenanceData} />
+          </ChartContainer>
+          </div>
 
         {/* Ongoing Projects Timeline */}
-        <SectionTitle>Ongoing Projects Timeline</SectionTitle>
-        <ChartContainer>
-          <Line data={projectTimelineData} />
-        </ChartContainer>
+        <div>
+          <SectionTitle>Ongoing Projects Timeline</SectionTitle>
+          <ChartContainer>
+            <Line width="200px" data={projectTimelineData} />
+          </ChartContainer>
+          </div>
+
       </DataContainer>
     </Dashboard_InfraContainer>
   );

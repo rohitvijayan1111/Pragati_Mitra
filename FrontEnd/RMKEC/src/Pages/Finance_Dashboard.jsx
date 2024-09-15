@@ -5,6 +5,7 @@ import { PieChart, Pie, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, Cell } fro
 // Styled Components for Dashboard
 const DashboardContainer = styled.div`
   max-width: 1200px;
+  max-height:1400px;
   margin: 2rem auto;
   padding: 2rem;
   border: 1px solid #ddd;
@@ -125,7 +126,7 @@ const FinancialDashboard = () => {
       <Section>
         <SectionTitle>Expenses Distribution</SectionTitle>
         <ChartWrapper>
-          <PieChart width={400} height={400}>
+          <PieChart width={400} height={500}>
             <Pie
               data={expenseData}
               cx={200}
@@ -143,20 +144,20 @@ const FinancialDashboard = () => {
             </Pie>
             <Tooltip />
             <Legend
-              layout="vertical"
+              layout="horizontal"
               verticalAlign="bottom"
-              align="right"
-              wrapperStyle={{paddingLeft: 20 }}
+              wrapperStyle={{paddingLeft: 20}}
             />
           </PieChart>
 
-          <BarChart width={600} height={400} data={incomeExpenseData}>
+          <BarChart width={500} height={500} barGap={0}   data={incomeExpenseData}
+          >
             <XAxis dataKey="name" />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="income" fill="#82ca9d" />
-            <Bar dataKey="expenses" fill="#8884d8" />
+            <Bar dataKey="income" fill="#82ca9d" barSize={40} />
+            <Bar dataKey="expenses" fill="#8884d8" barSize={40} />
           </BarChart>
         </ChartWrapper>
       </Section>
