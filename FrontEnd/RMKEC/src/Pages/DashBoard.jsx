@@ -9,6 +9,8 @@ import { jwtDecode } from 'jwt-decode';
 import { getTokenData } from './authUtils';
 import Dashboard_student from './Dashboard_student';
 import Dashboard_Infra from './Dashboard_Infra';
+import Faculty_Dashboard from './Faculty_Dashboard';
+import FinancialDashboard from './Finance_Dashboard';
 
 
 const DashBoard = () => {
@@ -25,8 +27,10 @@ const DashBoard = () => {
       {role==='Event Coordinator' && <DashBoard_Hall/>}
       {role==='Student' && <Dashboard_student/>}
       {role==="Infrastructure Coordinator" && <Dashboard_Infra/>}
-      {role !== 'hod' && role !== 'Attendance Manager' && role!=='Event Coordinator' && role!=="Infrastructure Coordinator" && role!=='Student' && role!=="Infrastructure Coordinator" && <Dashboard_admin />}
+      {role==="Faculty" && <Faculty_Dashboard/>}
+      {role==="Finance Coordinator" && <FinancialDashboard/>}
+      {role !== 'hod' && role !== 'Attendance Manager' && role!=='Event Coordinator' && role!=="Finance Coordinator" && role!=="Faculty" && role!=="Infrastructure Coordinator" && role!=='Student' && role!=="Infrastructure Coordinator" && <Dashboard_admin />}
     </>
   );
 }
-export default withAuthorization(['hod', 'Principal', 'VC', 'Dean', 'Attendance Manager','Event Coordinator',"academic_coordinator","IQAC","Student","Infrastructure Coordinator"])(DashBoard);
+export default withAuthorization(['hod','Faculty' ,'Principal', 'VC', 'Dean', 'Attendance Manager','Event Coordinator',"academic_coordinator","IQAC","Student","Infrastructure Coordinator","Finance Coordinator"])(DashBoard);

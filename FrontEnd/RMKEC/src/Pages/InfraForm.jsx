@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { ToastContainer, toast, Zoom } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Styled Components for Form
 const FormContainer = styled.div`
@@ -88,11 +90,19 @@ const InfraForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here (e.g., save to backend)
-    console.log('Infrastructure Data Submitted:', formData);
+    toast.info('This feature hasn’t been built yet', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Zoom
+    });
 
-    // Navigate to another page or back to the table after submission
-    navigate('/');
+    setTimeout(()=>navigate('/dashboard'),3000);
   };
 
   return (
@@ -203,6 +213,7 @@ const InfraForm = () => {
           Cancel
         </CancelButton>
       </form>
+      <ToastContainer />
     </FormContainer>
   );
 };
