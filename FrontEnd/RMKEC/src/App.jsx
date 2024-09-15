@@ -51,6 +51,7 @@ import InfraForm from "./Pages/InfraForm";
 import ReportGeneration from "./Pages/Reportgenaration";
 import Documents from "./Pages/Reportgenaration";
 import SetDeadlinePage from "./Components/SetDeadlinePage";
+import DefaultLogin from "./Pages/DefaultLogin";
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -69,7 +70,8 @@ function App() {
         <Router>
           <ScrollToTop />
           <Routes>
-            <Route path="/" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<DefaultLogin />} />
             <Route path="/invalidpage" element={<Invalidpage />} />
             <Route path="/signup" element={<SignPage />} />
             <Route path="/dashboard/*" element={<Layout />}>
