@@ -78,6 +78,7 @@ const CustomTooltip = ({ active, payload }) => {
 
 const PrincipalSPC = ({ data }) => (
   <ResponsiveContainer >
+    
     <div style={{
       display: 'flex',
       justifyContent: 'center',
