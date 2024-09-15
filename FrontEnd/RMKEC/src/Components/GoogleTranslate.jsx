@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 
 const GoogleTranslate = () => {
   useEffect(() => {
-    // Check if the script is already added
     const existingScript = document.getElementById('google-translate-script');
     if (!existingScript) {
       const script = document.createElement('script');
@@ -13,7 +12,6 @@ const GoogleTranslate = () => {
       document.body.appendChild(script);
     }
 
-    // Function to apply custom styles to the Google Translate dropdown
     const applyCustomStyles = () => {
       const translateFrame = document.querySelector('.goog-te-menu-frame');
       if (translateFrame) {
@@ -31,18 +29,16 @@ const GoogleTranslate = () => {
       }
     };
 
-    // Function to hide the language dropdown after a language is selected
     const hideLanguageDropdown = () => {
       const selectedLanguage = document.querySelector('.goog-te-menu2-item-selected');
       if (selectedLanguage) {
         const translateElement = document.getElementById('google_translate_element');
         if (translateElement) {
-          translateElement.style.display = 'none';  // Hide the dropdown
+          translateElement.style.display = 'none';  
         }
       }
     };
 
-    // Observe when a language is selected and hide the dropdown
     const observeLanguageChange = () => {
       const translateFrame = document.querySelector('.goog-te-menu-frame');
 
@@ -50,7 +46,7 @@ const GoogleTranslate = () => {
         const observer = new MutationObserver((mutations) => {
           for (const mutation of mutations) {
             if (mutation.type === 'childList') {
-              hideLanguageDropdown();  // Hide the dropdown once language is selected
+              hideLanguageDropdown();  
             }
           }
         });
@@ -59,7 +55,6 @@ const GoogleTranslate = () => {
       }
     };
 
-    // Initialize Google Translate
     window.googleTranslateElementInit = function() {
       new window.google.translate.TranslateElement(
         {
@@ -70,14 +65,12 @@ const GoogleTranslate = () => {
         'google_translate_element'
       );
 
-      // Wait for the Translate widget to be fully initialized before applying styles
       setTimeout(() => {
         applyCustomStyles();
-        observeLanguageChange(); // Start observing changes
+        observeLanguageChange(); 
       }, 2000);
     };
 
-    // Cleanup function
     return () => {
       if (existingScript) {
         document.body.removeChild(existingScript);
