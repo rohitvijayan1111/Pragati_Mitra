@@ -29,8 +29,8 @@ function Finance_Sidebar() {
             Dashboard
           </Link>
         </li>
-        <li className={isActive('/dashboard/financial-statement')}>
-          <Link to="/dashboard/financial-statement">
+        <li className={isActive('/dashboard/finance-table')}>
+          <Link to="/dashboard/finance-table">
             <img src={finance} width="40px" height="40px" alt="Faculty Details" />
             Finance<br/>Statements
           </Link>

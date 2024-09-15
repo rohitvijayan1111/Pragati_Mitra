@@ -13,6 +13,7 @@ import reserve from '../assets/reserve.png';
 import upcoming from '../assets/upcoming.png';
 import Status from '../assets/Status.png';
 import report from '../assets/report.png';
+import report2 from '../assets/AI.png';
 import Available from '../assets/Available.png';
 import others from '../assets/others.png';
 import { getTokenData } from "../Pages/authUtils";
@@ -172,6 +173,12 @@ function SideBar() {
             <Link to="/dashboard/reports-generation">
             <img src={report} width="40px" height="50px" alt="Other Forms" />
             Report
+          </Link>
+            </li>
+            <li>
+            <Link to="/dashboard/AI-report">
+            <img src={report2} width="40px" height="50px" alt="Other Forms" />
+            AI analysis
           </Link>
             </li>
           </>
