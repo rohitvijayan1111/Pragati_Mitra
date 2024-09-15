@@ -83,7 +83,7 @@ const FinancialStatementForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    toast.info('This feature hasn’t been built yet', {
+    toast.info('This feature is currently being built', {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -218,7 +218,7 @@ const FinancialStatementForm = () => {
         </FormField>
 
         <SubmitButton type="submit">Submit</SubmitButton>
-        <CancelButton type="button" onClick={() => navigate('/')}>
+        <CancelButton type="button" onClick={() => navigate('/dashboard')}>
           Cancel
         </CancelButton>
       </form>

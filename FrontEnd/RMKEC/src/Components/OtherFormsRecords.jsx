@@ -253,9 +253,9 @@ function OtherFormsRecords() {
         </div>
         <div className="col">
           <button type="button" onClick={handleSearch} className="search-button">Search</button>
-          <button type="button" onClick={resetSearch} className="bttreset">Reset</button>
+          
         </div>
-
+        <button type="button" onClick={resetSearch} className="bttreset">Reset</button>
         {role === "IQAC" && <div className="col">
           <button type="button" onClick={handleLock} className="bttlock">{!lockedstatus ? "Lock Form" : "Unlock Form"}</button>
         </div>}
@@ -264,7 +264,7 @@ function OtherFormsRecords() {
           <button type="button" onClick={handleAdd} className="search-button">Add Records</button>
         </div>}
         <div className="col">
-          <button type="button" onClick={()=>{toast.info('This feature hasn’t been built yet', {
+          <button type="button" onClick={()=>{toast.info('This feature is currently being built', {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -277,7 +277,7 @@ function OtherFormsRecords() {
     });}} className="bttexport">Import Excel</button>
         </div>
         <div className="col">
-                  <button type="button" onClick={()=>{toast.info('This feature hasn’t been built yet', {
+                  <button type="button" onClick={()=>{toast.info('This feature is currently being built', {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -294,7 +294,7 @@ function OtherFormsRecords() {
       <div className="row">
         <div className="col-md-6">
           <label htmlFor="exampleDropdown" className="form-label">Select Version Control</label>
-          <select id="exampleDropdown" className="form-select" onChange={()=>{toast.info('This feature hasn’t been built yet', {
+          <select id="exampleDropdown" className="form-select" onChange={()=>{toast.info('This feature is currently being built', {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
