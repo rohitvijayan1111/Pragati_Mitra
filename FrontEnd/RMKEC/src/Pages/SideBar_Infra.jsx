@@ -29,8 +29,8 @@ function SideBar_Infra() {
             Dashboard
           </Link>
         </li>
-        <li className={isActive('/dashboard/Infrastructure')}>
-          <Link to="/dashboard/Infrastructure">
+        <li className={isActive('/dashboard/Infrastructure-table')}>
+          <Link to="/dashboard/Infrastructure-table">
             <img src={infra} width="40px" height="40px" alt="Faculty Details" />
             Infra Details
           </Link>

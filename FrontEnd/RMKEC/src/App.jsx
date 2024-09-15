@@ -53,6 +53,9 @@ import Documents from "./Pages/Reportgenaration";
 import SetDeadlinePage from "./Components/SetDeadlinePage";
 import DefaultLogin from "./Pages/DefaultLogin";
 import StudentAchievementTable from "./Pages/StudentAchievementTable";
+import InfraDataTable from "./Pages/InfraDataTable";
+import FinancialStatementList from "./Pages/FinancialStatementList";
+import AIReport from "./Pages/AIReport";
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -67,7 +70,6 @@ function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <div className='app'>
-      <GoogleTranslate/>
         <Router>
           <ScrollToTop />
           <Routes>
@@ -88,11 +90,13 @@ function App() {
               <Route path="academic-table" element={<AcademicTable/>} />
               <Route path="academic-table/academic" element={<Academicperformance/>} />
               <Route path="faculty-table" element={<FacultyTable/>} />
-              <Route path="financial-statement" element={<FinancialStatementForm/>} />
+              <Route path="finance-table/financial-statement" element={<FinancialStatementForm/>} />
+              <Route path="finance-table" element={<FinancialStatementList/>} />
               <Route path="faculty-table/add-faculty-details" element={<AddFacultyForm/>} />
               <Route path="Student-achievement" element={<StudentAchievementForm/>}/>
               <Route path="Student-achievement-table" element={<StudentAchievementTable/>}/>             
-              <Route path="Infrastructure" element={<InfraForm/>}/>
+              <Route path="Infrastructure-table/Infrastructure" element={<InfraForm/>}/>
+              <Route path="Infrastructure-table" element={<InfraDataTable/>}/>
               {/* <Route path="view-other-forms" element={<ViewOtherForms />} />
               <Route path="view-other-forms/new-form" element={<CreateNewForm/>} />
               <Route path="view-other-forms/new-record" element={<AddNewRecord />} />
@@ -113,6 +117,7 @@ function App() {
               <Route path="reports" element={<ReportGenerator/>} />
               <Route path="reports-generation" element={<Documents/>} />
               <Route path="forms" element={<OtherForms/>} />
+              <Route path="AI-Report" element={<AIReport/>} />
               <Route path="forms/deadline" element={<SetDeadlinePage/>} />
               <Route path="forms/form-records" element={<OtherFormsRecords/>} />
               <Route path="forms/form-records/edit-form" element={<EditForm/>} />

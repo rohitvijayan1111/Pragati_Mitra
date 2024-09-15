@@ -5,6 +5,7 @@ import logo from '../assets/pragati.png';
 import axios from 'axios';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
+import GoogleTranslate from '../Components/GoogleTranslate';
 
 function DefaultLogin() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ function DefaultLogin() {
     faculty: { username: 'Faculty', password: '123' },
     infrastructure: { username: 'infrastructure coordinator', password: '123' },
     finance: { username: 'finance', password: '123' },
+    AcademicCoordinator:{username:"IQAC",password:"pass123"}
   };
 
   const notifysuccess = () => {
@@ -166,6 +168,40 @@ function DefaultLogin() {
   }}
   onMouseOver={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')}
   onMouseOut={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')} onClick={() => handleLogin('finance')}>Finance Login</button>
+                <button className="btn"  style={{
+    background: 'rgba(244, 244, 244, 0.9)',
+    color: '#164863',
+    fontWeight:'700',
+    border: 'none',
+    padding: '12px 24px',
+    fontSize: '16px',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+    margin: '10px 0',
+    transition: 'all 0.3s ease',
+    width: '100%',
+    textAlign: 'center'
+  }}
+  onMouseOver={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')}
+  onMouseOut={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')} onClick={() => handleLogin('AcademicCoordinator')}>Academic <br/>Co-Ordinator Login</button>
+    <label 
+  style={{
+    fontSize: '14px',
+    color: '#164863',
+    fontWeight: 'bold',
+    display: 'block',
+    marginTop: '20px',
+    marginBottom: '10px',
+    letterSpacing: '0.5px',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    transition: 'color 0.3s ease'
+  }}
+>
+  If Not English
+</label>
+    <GoogleTranslate/>
         </div>
       </div>
       <ToastContainer />

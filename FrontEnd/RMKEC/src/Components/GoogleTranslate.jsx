@@ -78,7 +78,7 @@ const GoogleTranslate = () => {
     };
   }, []);
 
-  return <div id="google_translate_element" style={{ position: 'fixed', top: 20, right: 5 }}></div>;
+  return <div id="google_translate_element" style={{ position: 'fixed', bottom: "1%", left:55 }}></div>;
 };
 
 export default GoogleTranslate;
