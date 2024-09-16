@@ -13,6 +13,7 @@ function NavBar() {
   const handleLogout = () => {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('loggedIn');
+    localStorage.removeItem('hasAgreedToTerms');
     window.location.href = '/';
   }
   function capitalizeWords(str) {

@@ -11,6 +11,7 @@ import Dashboard_student from './Dashboard_student';
 import Dashboard_Infra from './Dashboard_Infra';
 import Faculty_Dashboard from './Faculty_Dashboard';
 import FinancialDashboard from './Finance_Dashboard';
+import ComplianceOverlay from './ComplianceOverlay';
 
 
 const DashBoard = () => {
@@ -22,6 +23,7 @@ const DashBoard = () => {
 
   return (
     <>
+    <ComplianceOverlay/>
       {role === 'hod' && <DashBoard_hod />}
       {role === 'Attendance Manager' && <Attendance_DB_Dept />}
       {role==='Event Coordinator' && <DashBoard_Hall/>}

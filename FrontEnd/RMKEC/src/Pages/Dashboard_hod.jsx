@@ -6,6 +6,7 @@ import StudentCountPieChart from '../Components/Department-Component/StudentsCou
 import PlacementBarGraph from '../Components/Department-Component/PlacementBarGraph';
 import {Link} from 'react-router-dom'; 
 import { getTokenData } from './authUtils';
+import ComplianceOverlay from './ComplianceOverlay';
 
 function DashBoard_hod() {
   const tokenData = getTokenData();
