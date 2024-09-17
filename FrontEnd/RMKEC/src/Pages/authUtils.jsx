@@ -1,20 +1,22 @@
-import {jwtDecode} from 'jwt-decode';
+
 import { Navigate } from 'react-router-dom';
 export const getTokenData = () => {
   const token = sessionStorage.getItem('token');
   if (!token) {
     return null;
   }
-  
+
   try {
-    const decodedToken = jwtDecode(token);
+    // Parse the token string to retrieve the object
+    const parsedToken = JSON.parse(token);
+    console.log(parsedToken);
     return {
-      id: decodedToken.id,
-      role: decodedToken.role,
-      department: decodedToken.department,
+      id: parsedToken.id,
+      role: parsedToken.role,
+      department: parsedToken.department,
     };
   } catch (error) {
-    console.error('Failed to decode token:', error);
+    console.error('Failed to parse token:', error);
     return null;
   }
 };

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { ToastContainer, toast, Zoom } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Attendance_DB_Dept.css';
 import LineCharts from './LineCharts';
@@ -9,6 +8,7 @@ import Attendance_BC_Admin from '../Components/Admin-Component/Attendance_BC_Adm
 import withAuthorization from '../Components/WithAuthorization';
 import dayjs from 'dayjs';
 import { getTokenData } from '../Pages/authUtils';
+
 const BatchSelector = ({ onBatchSelect }) => {
   const [selectedBatch, setSelectedBatch] = useState('');
 
@@ -20,13 +20,14 @@ const BatchSelector = ({ onBatchSelect }) => {
 
   return (
     <div>
-      <select id="batchSelect" className='status-yr' value={selectedBatch} onChange={handleBatchChange}>
+      <select id="batchSelect" className="status-yr" value={selectedBatch} onChange={handleBatchChange}>
         <option value="Student">Student</option>
         <option value="Faculty">Faculty</option>
       </select>
     </div>
   );
 };
+
 const DepartmentSelector = ({ setSelectedDepartment }) => {
   const handleDepartmentChange = (event) => {
     const department = event.target.value;
@@ -35,7 +36,7 @@ const DepartmentSelector = ({ setSelectedDepartment }) => {
 
   return (
     <div>
-      <select id="departmentSelect" className='status-yr' onChange={handleDepartmentChange} required>
+      <select id="departmentSelect" className="status-yr" onChange={handleDepartmentChange} required>
         <option value="">Select Department</option>
         <option value="All">All</option>
         <option value="Artificial Intelligence and Data Science">Artificial Intelligence and Data Science</option>
@@ -53,8 +54,6 @@ const DepartmentSelector = ({ setSelectedDepartment }) => {
   );
 };
 
-
-
 const TypeSelector = ({ onTypeSelect }) => {
   const [selectedType, setSelectedType] = useState('All');
 
@@ -66,7 +65,7 @@ const TypeSelector = ({ onTypeSelect }) => {
 
   return (
     <div>
-      <select id="typeSelect" className='status-yr' value={selectedType} onChange={handleTypeChange}>
+      <select id="typeSelect" className="status-yr" value={selectedType} onChange={handleTypeChange}>
         <option value="All">All</option>
         <option value="Hostel">Hosteller</option>
         <option value="Day Scholar">Day Scholar</option>
@@ -87,83 +86,57 @@ const GridItem = ({ title, children }) => {
 export function Attendance_DB_Dept() {
   const [selectedYearGroup, setSelectedYearGroup] = useState('Student');
   const [selectedType, setSelectedType] = useState('All');
-  const [data, setData] = useState([]);
-  const [countdata, setCountData] = useState(null);
-  const [linedata, setLineData] = useState([]);
   const todayDate = dayjs().format('DD-MM-YYYY');
-  const tokendata=getTokenData();
-  const department=tokendata.department;
-  const notifyFailure = (error) => {
-    toast.error(error.message, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      transition: Zoom,
-    });
+  const tokendata = getTokenData();
+  const department = tokendata.department;
+
+  // Dummy data
+  const data = [
+    { name: 'I', present: 50, absent: 5 },
+    { name: 'II', present: 40, absent: 10 },
+    { name: 'III', present: 40, absent: 10 },
+    { name: 'IV', present: 40, absent: 10 },
+  ];
+  
+  const countdata = {
+    Total_students: 200,
+    Student_Present: 180,
+    Student_Absent: 20,
+    Total_staff: 50,
+    Staff_Present: 45,
+    Staff_Absent: 5
   };
 
-  useEffect(() => {
-    async function getData() {
-      try {
-        const response = await axios.post("http://localhost:3000/attendance/attendance-summary", { department: department,type: selectedType});
-        console.log('Attendance summary data:', response.data);
-        setData(response.data);
-
-        const response2 = await axios.post("http://localhost:3000/attendance/attendance-count-summary", { department: department, user: selectedYearGroup, type: selectedType });
-        console.log('Attendance count summary data:', response2.data);
-        setCountData(response2.data);
-
-        const response3 = await axios.post("http://localhost:3000/attendance/attendance-graph", { department: department, user: selectedYearGroup,type: selectedType });
-        console.log('Attendance graph data:', response3.data);
-        setLineData(response3.data);
-      } catch (error) {
-        if (error.response) {
-          console.error('Server Error:', error.response.data);
-          notifyFailure(new Error(error.response.data.error || 'Server Error'));
-        } else if (error.request) {
-          console.error('Network Error:', error.request);
-          notifyFailure(new Error('Network Error'));
-        } else {
-          console.error('Request Error:', error.message);
-          notifyFailure(new Error('Request Error'));
-        }
-      }
-    }
-    getData();
-  }, [selectedYearGroup, selectedType]);
+  const linedata = [
+    { date: '01-09-2024', present: 50, absent: 5 },
+    { date: '02-09-2024', present: 55, absent: 2 },
+  ];
 
   const handleYearGroupSelect = (yearGroup) => {
     setSelectedYearGroup(yearGroup);
-    setLineData([]);
   };
 
   const handleTypeSelect = (type) => {
     setSelectedType(type);
-    setLineData([]);
   };
 
   return (
     <div>
-      <div className='content'>
+      <div className="content">
         <BatchSelector onBatchSelect={handleYearGroupSelect} />
-      <TypeSelector onTypeSelect={handleTypeSelect} />
+        <TypeSelector onTypeSelect={handleTypeSelect} />
       </div>
-      
-      <div className='component'>
+
+      <div className="component">
         <h1>{todayDate}</h1>
-        <div className='home-grid-db'>
+        <div className="home-grid-db">
           <div className="grid-containers">
-            <div className='home-grid-db'>
+            <div className="home-grid-db">
               <GridItem title="Attendance">
                 <Attendance_BC data={data} />
               </GridItem>
               <GridItem title="Data">
-                <div className='content-container'>
+                <div className="content-container">
                   {countdata !== null && (
                     <>
                       <p>Total No of students: {countdata.Total_students}</p>
@@ -191,105 +164,57 @@ export function Attendance_DB_Dept() {
 export function Attendance_DB_Admin() {
   const [selectedYearGroup, setSelectedYearGroup] = useState('Student');
   const [selectedType, setSelectedType] = useState('All');
-  const [data, setData] = useState([]);
-  const [countdata, setCountData] = useState(null);
-  const [linedata, setLineData] = useState([]);
-  const user = window.localStorage.getItem('userType');
   const todayDate = dayjs().format('DD-MM-YYYY');
-  const [selectedDepartment, setSelectedDepartment] = useState('');
-  const departmentMapping = {
-    'Artificial Intelligence and Data Science': 'AI',
-    'Civil Engineering': 'CE',
-    'Computer Science and Business Systems': 'CB',
-    'Computer Science and Design': 'CD',
-    'Computer Science and Engineering': 'CS',
-    'Electrical and Electronics Engineering': 'EE',
-    'Electronics and Communication Engineering': 'EC',
-    'Electronics and Instrumentation Engineering': 'EI',
-    'Information Technology': 'IT',
-    'Mechanical Engineering': 'ME',
-  };
-  const transformData = (data) => {
-    return data.map((item) => ({
-      name: departmentMapping[item.name] || item.name,
-      present: item.present,
-      absent: item.absent
-    }));
-  };
 
-  const notifyFailure = (error) => {
-    toast.error(error.message, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      transition: Zoom,
-    });
+  // Dummy data
+  const data = [
+    { name: 'AI', present: 50, absent: 5 },
+    { name: 'IT', present: 40, absent: 10 },
+    { name: 'CSE', present: 50, absent: 5 },
+    { name: 'ECE', present: 40, absent: 10 },
+    { name: 'CE', present: 50, absent: 5 },
+    { name: 'ME', present: 40, absent: 10 },
+
+  ];
+
+  const countdata = {
+    Total_students: 250,
+    Student_Present: 230,
+    Student_Absent: 20,
+    Total_staff: 60,
+    Staff_Present: 55,
+    Staff_Absent: 5
   };
 
-  useEffect(() => {
-    async function getData() {
-      try {
-        const response = await axios.post("http://localhost:3000/attendance/admin-attendance-summary", { user: selectedYearGroup, type: selectedType });
-        console.log('Attendance summary data:', response.data);
-        setData(transformData(response.data));
-        console.log(data);
-        const response2 = await axios.post("http://localhost:3000/attendance/admin-attendance-count-summary", { type: selectedType });
-        console.log('Attendance count summary data:', response2.data);
-        setCountData(response2.data);
-
-        const response3 = await axios.post("http://localhost:3000/attendance/admin-attendance-graph", { user: selectedYearGroup, type: selectedType });
-        console.log('Attendance graph data:', response3.data);
-        setLineData(response3.data);
-      } catch (error) {
-        if (error.response) {
-          console.error('Server Error:', error.response.data);
-          notifyFailure(new Error(error.response.data.error || 'Server Error'));
-        } else if (error.request) {
-          console.error('Network Error:', error.request);
-          notifyFailure(new Error('Network Error'));
-        } else {
-          console.error('Request Error:', error.message);
-          notifyFailure(new Error('Request Error'));
-        }
-      }
-    }
-    getData();
-  }, [selectedYearGroup, selectedDepartment, selectedType]);
+  const linedata = [
+    { date: '01-09-2024', present: 70, absent: 5 },
+    { date: '02-09-2024', present: 60, absent: 10 },
+  ];
 
   const handleYearGroupSelect = (yearGroup) => {
     setSelectedYearGroup(yearGroup);
-    setLineData([]);
   };
 
   const handleTypeSelect = (type) => {
     setSelectedType(type);
-    setLineData([]);
   };
 
   return (
     <div>
-      <div className='selector'>
+      <div className="selector">
         <BatchSelector onBatchSelect={handleYearGroupSelect} />
         <TypeSelector onTypeSelect={handleTypeSelect} />
-        {(user !== 'hod' && user !== 'Attendance Manager') && (
-          <DepartmentSelector setSelectedDepartment={setSelectedDepartment} />
-        )}
       </div>
-      <div className='component'>
+      <div className="component">
         <h1>{todayDate}</h1>
-        <div className='home-grid-db'>
+        <div className="home-grid-db">
           <div className="grid-containers">
-            <div className='home-grid-db'>
+            <div className="home-grid-db">
               <GridItem title="Attendance">
                 <Attendance_BC_Admin data={data} />
               </GridItem>
               <GridItem title="Data">
-                <div className='content-container'>
+                <div className="content-container">
                   {countdata !== null && (
                     <>
                       <p>Total No of students: {countdata.Total_students}</p>
@@ -315,12 +240,9 @@ export function Attendance_DB_Admin() {
 }
 
 const Attendance_Dashboard = () => {
-  const tokendata=getTokenData();
-  const user=tokendata.role;
-  return (
-    (user==="hod" || user==="Attendance Manager") ? <Attendance_DB_Dept /> : <Attendance_DB_Admin />
-  );
+  const tokendata = getTokenData();
+  const user = tokendata.role;
+  return user === 'hod' || user === 'Attendance Manager' ? <Attendance_DB_Dept /> : <Attendance_DB_Admin />;
+};
 
-}
-
-export default withAuthorization(['hod','Principal','VC','Dean','Attendance Manager'])(Attendance_Dashboard);
+export default withAuthorization(['hod', 'Principal', 'VC', 'Dean', 'Attendance Manager'])(Attendance_Dashboard);

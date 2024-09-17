@@ -18,7 +18,7 @@ const AddForm = () => {
   const [data, setData] = useState({ department: tokendata.department });
   const [file, setFile] = useState(null);
   const [fileInputKey, setFileInputKey] = useState(Date.now());
-  
+
   // State to hold multiple company details
   const [companyDetails, setCompanyDetails] = useState([
     { companyName: '', salaryOffered: '', noOfStuPlaced: '' },
@@ -70,7 +70,7 @@ const AddForm = () => {
       document: 'No file selected'
     }));
   };
-  
+
   const removeEmailFromNotSubmitted = async (formId, email) => {
     try {
       const response = await axios.post('http://localhost:3000/tables/remove-email', {
@@ -106,33 +106,19 @@ const AddForm = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const formData = new FormData();
-      formData.append('table', table);
-      Object.entries(data).forEach(([key, value]) => {
-        formData.append(key, value);
-      });
-      if (file) {
-        console.log("File exists");
-        formData.append('file', file);
-      }
-      const response = await axios.post("http://localhost:3000/tables/insertrecord", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      console.log(response.data);
-      //removeEmailFromNotSubmitted(formId,tokendata.email);
-      notifysuccess();
-      setTimeout(() => {
-        navigate(-1);
-      }, 1500);
-    } catch (error) {
-      notifyfailure(error.response.data.error || 'Error inserting record');
-    }
+  // New function to notify about feature unavailability
+  const notifyFeatureUnavailable = () => {
+    toast.info('Could not host this feature. Kindly check the video link in the PPT for the functionality.', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Zoom,
+    });
   };
 
   const handleChange = (attribute, value) => {
@@ -182,7 +168,7 @@ const AddForm = () => {
     <div className="cnt">
       <h2>Add Record</h2>
       {attributenames && attributenames.length > 0 ? (
-        <form className='edt' onSubmit={handleSubmit}>
+        <form className='edt' onSubmit={(e) => { e.preventDefault(); notifyFeatureUnavailable(); }}>
           {attributenames.map((attribute, index) => (
             attribute !== "id" && attribute !== "department" && attribute!=="createdAt" && (
               <div className="frm" key={index}>
@@ -215,7 +201,7 @@ const AddForm = () => {
                       />
                     </div>
                     <div className='bttns'>
-                      <label htmlFor={attribute}  className="custom-file-upload">
+                      <label htmlFor={attribute} className="custom-file-upload">
                         Choose File
                       </label>
                       <button type="button" className="custom-file-upload" onClick={handleFileReset}>Reset File</button>
@@ -230,80 +216,79 @@ const AddForm = () => {
                       }}
                       key={fileInputKey}
                       style={{ display: 'none' }}
-                      required
+                      
                     />
                   </div>
-                ) : attributeTypes[attribute] === 'Placement_Percentage' ?( 
+                ) : attributeTypes[attribute] === 'Placement_Percentage' ? (
                   <>
-                  <input
+                    <input
                       type="text"
                       className="cntr"
                       id={attribute}
-                      onChange={(e) => setData({ ...data, [attribute]: (data[No_of_Students_Placed]/data[No_of_Students_Registered_for_Placement])*100 })}
+                      onChange={(e) => setData({ ...data, [attribute]: (data[No_of_Students_Placed] / data[No_of_Students_Registered_for_Placement]) * 100 })}
                       value={data[attribute] || ''}
                       readOnly
                     />
                   </>
-                ): attributeTypes[attribute] === 'Percentage_of_Higher_Studies' ?( 
+                ) : attributeTypes[attribute] === 'Percentage_of_Higher_Studies' ? (
                   <>
-                  <input
+                    <input
                       type="text"
                       className="cntr"
                       id={attribute}
-                      onChange={(e) => setData({ ...data, [attribute]: (data[No_of_Students_Admitted_to_Higher_Studies]/data[No_of_Students_Opted_for_Higher_Studies])*100 })}
+                      onChange={(e) => setData({ ...data, [attribute]: (data[No_of_Students_Admitted_to_Higher_Studies] / data[No_of_Students_Opted_for_Higher_Studies]) * 100 })}
                       value={data[attribute] || ''}
                       readOnly
                     />
                   </>
-                ):attributeTypes[attribute] === 'json' ?( 
+                ) : attributeTypes[attribute] === 'json' ? (
                   <>
-                  {companyDetails.map((detail, index) => (
-                    <div key={index} className="company-detail">
-                      <div className="company-div">
-                        <label htmlFor={`companyName-${index}`} className="company-lbl"><b>Company Name:</b></label>
-                        <input
-                          type="text"
-                          className="cntr"
-                          id={`companyName-${index}`}
-                          value={detail.companyName}
-                          onChange={(e) => handleCompanyDetailChange(index, 'companyName', e.target.value)}
-                          required
-                        />
+                    {companyDetails.map((detail, index) => (
+                      <div key={index} className="company-detail">
+                        <div className="company-div">
+                          <label htmlFor={`companyName-${index}`} className="company-lbl"><b>Company Name:</b></label>
+                          <input
+                            type="text"
+                            className="cntr"
+                            id={`companyName-${index}`}
+                            value={detail.companyName}
+                            onChange={(e) => handleCompanyDetailChange(index, 'companyName', e.target.value)}
+                            required
+                          />
+                        </div>
+                        <div className="company-div">
+                          <label htmlFor={`salaryOffered-${index}`} className="company-lbl"><b>Salary Offered:</b></label>
+                          <input
+                            type="text"
+                            className="cntr"
+                            id={`salaryOffered-${index}`}
+                            value={detail.salaryOffered}
+                            onChange={(e) => handleCompanyDetailChange(index, 'salaryOffered', e.target.value)}
+                            required
+                          />
+                        </div>
+                        <div className="company-div">
+                          <label htmlFor={`noOfStuPlaced-${index}`} className="company-lbl"><b>No. Of Stu Placed:</b></label>
+                          <input
+                            type="text"
+                            className="cntr"
+                            id={`noOfStuPlaced-${index}`}
+                            value={detail.noOfStuPlaced}
+                            onChange={(e) => handleCompanyDetailChange(index, 'noOfStuPlaced', e.target.value)}
+                            required
+                          />
+                        </div>
                       </div>
-                      <div className="company-div">
-                        <label htmlFor={`salaryOffered-${index}`} className="company-lbl"><b>Salary Offered:</b></label>
-                        <input
-                          type="text"
-                          className="cntr"
-                          id={`salaryOffered-${index}`}
-                          value={detail.salaryOffered}
-                          onChange={(e) => handleCompanyDetailChange(index, 'salaryOffered', e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="company-div">
-                        <label htmlFor={`noOfStuPlaced-${index}`} className="company-lbl"><b>No. Of Stu Placed:</b></label>
-                        <input
-                          type="text"
-                          className="cntr"
-                          id={`noOfStuPlaced-${index}`}
-                          value={detail.noOfStuPlaced}
-                          onChange={(e) => handleCompanyDetailChange(index, 'noOfStuPlaced', e.target.value)}
-                          required
-                        />
-                      </div>
-                    </div>
-                  ))}
-          
-                  <div className="company-buttons">
-                    <button type="button" className="cmp-btt" onClick={addCompanyDetail}>Add</button>
-                    {companyDetails.length > 1 && (
-                      <button type="button" className="cmp-btt" onClick={deleteLastCompanyDetail}>Delete</button>
-                    )}
-                  </div>
+                    ))}
 
-                </>
-                ):(
+                    <div className="company-buttons">
+                      <button type="button" className="cmp-btt" onClick={addCompanyDetail}>Add</button>
+                      {companyDetails.length > 1 && (
+                        <button type="button" className="cmp-btt" onClick={deleteLastCompanyDetail}>Delete</button>
+                      )}
+                    </div>
+                  </>
+                ) : (
                   <input
                     type="text"
                     className="cntr"
@@ -315,9 +300,8 @@ const AddForm = () => {
                 )}
               </div>
             )
-          ))}        
+          ))}
 
-          
           <div className="btns">
             <button type="submit" className="btn-submit">Submit</button>
           </div>

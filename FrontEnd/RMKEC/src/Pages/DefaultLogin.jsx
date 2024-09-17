@@ -9,14 +9,13 @@ import GoogleTranslate from '../Components/GoogleTranslate';
 
 function DefaultLogin() {
   const navigate = useNavigate();
-
   const users = {
-    student: { username: 'Student', password: '123' },
-    hod: { username: 'broh22012.it@rmkec.ac.in', password: 'pass123' },
-    faculty: { username: 'Faculty', password: '123' },
-    infrastructure: { username: 'infrastructure coordinator', password: '123' },
-    finance: { username: 'finance', password: '123' },
-    AcademicCoordinator:{username:"IQAC",password:"pass123"}
+    Student: {id:1, username: 'Student', password: '123',role:"Student",department:"Information Technology" },
+    hod: {id:2, username: 'broh22012.it@rmkec.ac.in', password: 'pass123',role:"hod",department:"Information Technology"},
+    Faculty: {id:3, username: 'Faculty', password: '123',role:"Faculty",department:"Information Technology"},
+    "Infrastructure Coordinator": {id:4, username: 'infrastructure coordinator', password: '123',role:"Infrastructure Coordinator",department:"Infrastructure Coordinator" },
+    "Finance Coordinator": {id:5, username: 'finance', password: '123',role:"Finance Coordinator",department:"Finance Coordinator"},
+    AcademicCoordinator:{id:6,username:"IQAC",password:"pass123",role:"IQAC",department:"IQAC"}
   };
 
   const notifysuccess = () => {
@@ -49,13 +48,9 @@ function DefaultLogin() {
 
   const validateUser = async (userData) => {
     try {
-      const response = await axios.post('http://localhost:3000/auth/login', userData);
-      const { token } = response.data;
+      const token = JSON.stringify({ department: userData.department, role: userData.role==="AcademicCoordinator"?"IQAC":userData.role, id: userData.id });
       sessionStorage.setItem('token', token);
       sessionStorage.setItem('loggedIn', 'true');
-      const decodedToken = jwtDecode(token);
-      const role = decodedToken.role;
-      console.log('Decoded Role:', role);
       notifysuccess();
       setTimeout(() => {
         navigate('/dashboard');
@@ -67,11 +62,13 @@ function DefaultLogin() {
       notifyfailure(errorMsg);
     }
   };
+  
 
   const handleLogin = (role) => {
-    const { username, password } = users[role];
-    validateUser({ username: username, password: password });
+    const { username, department } = users[role];
+    validateUser({ username: username, role: role, department: department });
   };
+  
 
   return (
     <div className='loginpage'>
@@ -117,7 +114,7 @@ function DefaultLogin() {
     textAlign: 'center'
   }}
   onMouseOver={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')}
-  onMouseOut={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')} onClick={() => handleLogin('student')}>Student Login</button>
+  onMouseOut={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')} onClick={() => handleLogin('Student')}>Student Login</button>
           <button className="btn"  style={{
     background: 'rgba(244, 244, 244, 0.9)',
     color: '#164863',
@@ -151,7 +148,7 @@ function DefaultLogin() {
     textAlign: 'center'
   }}
   onMouseOver={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')}
-  onMouseOut={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')} onClick={() => handleLogin('faculty')}>Faculty Login</button>
+  onMouseOut={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')} onClick={() => handleLogin('Faculty')}>Faculty Login</button>
           <button className="btn"  style={{
     background: 'rgba(244, 244, 244, 0.9)',
     color: '#164863',
@@ -168,7 +165,7 @@ function DefaultLogin() {
     textAlign: 'center'
   }}
   onMouseOver={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')}
-  onMouseOut={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')} onClick={() => handleLogin('infrastructure')}>Infrastructure Login</button>
+  onMouseOut={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')} onClick={() => handleLogin('Infrastructure Coordinator')}>Infrastructure Login</button>
         <label 
   style={{
     fontSize: '14px',
@@ -199,7 +196,7 @@ function DefaultLogin() {
     textAlign: 'center'
   }}
   onMouseOver={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')}
-  onMouseOut={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')} onClick={() => handleLogin('finance')}>Finance Login</button>
+  onMouseOut={(e) => (e.target.style.background = 'rgba(244, 244, 244, 0.9)')} onClick={() => handleLogin('Finance Coordinator')}>Finance Login</button>
   
   If Not English
 </label>
