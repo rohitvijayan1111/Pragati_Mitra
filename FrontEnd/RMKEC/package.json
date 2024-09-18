@@ -1,7 +1,6 @@
 {
   "name": "rmkec",
-  "private": true,
-  "homepage": "http://rohitvijayan1111.github.io/Pragati_Mitra",
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
