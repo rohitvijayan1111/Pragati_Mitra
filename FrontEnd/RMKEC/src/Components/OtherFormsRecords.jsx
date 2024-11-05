@@ -14,6 +14,7 @@ function OtherFormsRecords() {
   const navigate = useNavigate();
   const location = useLocation();
   const { form } = location.state;
+  console.log(form);
   const [table] = useState(form.form_table_name);
   const tokendata = getTokenData();
   const role = tokendata.role;
@@ -25,6 +26,187 @@ function OtherFormsRecords() {
   const [searchColumn, setSearchColumn] = useState('');
   const [searchValue, setSearchValue] = useState('');
   const [attributeTypes, setAttributeTypes] = useState({ 'document': 'file', 'website_link': 'link', 'related_link': 'link' });
+  const server_data = [
+    {
+      "Club_activities": {
+        dummyData: [
+          {
+            "id": 1,
+            "title": "Coding Clubing",
+            "createdAt": "2024-01-15T10:00:00Z",
+            "deadline": "2024-02-01T17:00:00Z",
+            "status": "ongoing",
+            "dept": "Science"
+          },
+          {
+            "id": 2,
+            "title": "Mathematics Club",
+            "createdAt": "2024-03-10T09:30:00Z",
+            "deadline": "2024-04-05T16:00:00Z",
+            "status": "completed",
+            "dept": "Electronics and communication engineering"
+          },
+          {
+            "id": 3,
+            "title": "Astronomy Club",
+            "createdAt": "2024-05-22T14:00:00Z",
+            "deadline": "2024-06-15T18:00:00Z",
+            "status": "pending",
+            "dept": "Information Technology"
+          }
+        ],
+        attributenames: ["id", "title", "createdAt", "deadline", "status", "dept"],
+        attributeTypes: {
+          'id': 'number',
+          'title': 'text',
+          'createdAt': 'date',
+          'deadline': 'date',
+          'status': 'enum',
+          'dept': 'text'
+        }
+      }
+    },
+    {
+      "Industrial_visits": {
+        dummyData: [
+          {
+            "department": "Science",
+            "Year": "2024",
+            "Section": "A",
+            "Total No of students": 30,
+            "No of students visited": 25,
+            "Name of the company/Industry": "Tech Innovations",
+            "Proposed date of visit": "2024-02-10",
+            "Completed (Yes/No)": "Yes",
+            "Actual Date Visited": "2024-02-12",
+            "Uploaded In Website (Yes/No)": "Yes",
+            "website link": "http://techinnovations.com",
+            "document": "visit_report_tech_innovations.pdf",
+            "createdAt": "2024-01-10T09:00:00Z"
+          },
+          {
+            "department": "Electronics and communication engineering",
+            "Year": "2024",
+            "Section": "B",
+            "Total No of students": 40,
+            "No of students visited": 35,
+            "Name of the company/Industry": "ElectroCorp",
+            "Proposed date of visit": "2024-03-15",
+            "Completed (Yes/No)": "No",
+            "Actual Date Visited": null,
+            "Uploaded In Website (Yes/No)": "No",
+            "website link": null,
+            "document": null,
+            "createdAt": "2024-02-20T11:00:00Z"
+          },
+          {
+            "department": "Information Technology",
+            "Year": "2024",
+            "Section": "C",
+            "Total No of students": 25,
+            "No of students visited": 20,
+            "Name of the company/Industry": "InfoTech Solutions",
+            "Proposed date of visit": "2024-04-20",
+            "Completed (Yes/No)": "Yes",
+            "Actual Date Visited": "2024-04-22",
+            "Uploaded In Website (Yes/No)": "Yes",
+            "website link": "http://infotechsolutions.com",
+            "document": "visit_report_infotech_solutions.pdf",
+            "createdAt": "2024-03-05T14:00:00Z"
+          }
+        ],
+        attributenames: ["department", "Year", "Section", "Total No of students", "No of students visited", "Name of the company/Industry", "Proposed date of visit", "Completed (Yes/No)", "Actual Date Visited", "Uploaded In Website (Yes/No)", "website link", "document", "createdAt"],
+        attributeTypes: {
+          'department': 'text',
+          'Year': 'text',
+          'Section': 'text',
+          'Total No of students': 'number',
+          'No of students visited': 'number',
+          'Name of the company/Industry': 'text',
+          'Proposed date of visit': 'date',
+          'Completed (Yes/No)': 'enum',
+          'Actual Date Visited': 'date',
+          'Uploaded In Website (Yes/No)': 'enum',
+          'website link': 'text',
+          'document': 'text',
+          'createdAt': 'date'
+        }
+      }
+    },
+    {
+      "Emerging_technologies": {
+        dummyData: [
+          {
+            "id": 1,
+            "department": "Computer Science",
+            "emerging_technology": "Artificial Intelligence",
+            "topic": "Machine Learning and Neural Networks",
+            "International recognized certification authority with address": "AI Certification Institute, 123 Tech Lane, Silicon Valley, CA",
+            "duration": "6 months",
+            "start_date": "2024-01-15",
+            "end_date": "2024-07-15",
+            "faculty_name(1-60 intake,2-120 intake,3-180 intake)": "Dr. John Smith",
+            "status": "ongoing",
+            "amount_received_rs": "50000",
+            "activities_conducted": "Workshops, hands-on sessions, guest lectures",
+            "document": "ai_certification_program.pdf",
+            "createdAt": "2024-01-10T09:00:00Z"
+          },
+          {
+            "id": 2,
+            "department": "Electronics Engineering",
+            "emerging_technology": "Quantum Computing",
+            "topic": "Introduction to Quantum Mechanics and Quantum Algorithms",
+            "International recognized certification authority with address": "Quantum Institute, 456 Quantum Road, Quantum City, TX",
+            "duration": "3 months",
+            "start_date": "2024-02-01",
+            "end_date": "2024-05-01",
+            "faculty_name(1-60 intake,2-120 intake,3-180 intake)": "Dr. Alice Johnson",
+            "status": "completed",
+            "amount_received_rs": "30000",
+            "activities_conducted": "Seminars, lab sessions, certification exam",
+            "document": "quantum_computing_certification.pdf",
+            "createdAt": "2024-01-20T10:00:00Z"
+          },
+          {
+            "id": 3,
+            "department": "Information Technology",
+            "emerging_technology": "Blockchain Technology",
+            "topic": "Blockchain Basics and Smart Contracts",
+            "International recognized certification authority with address": "Blockchain Academy, 789 Chain Street, Crypto Town, NY",
+            "duration": "4 months",
+            "start_date": "2024-03-01",
+            "end_date": "2024-07-01",
+            "faculty_name(1-60 intake,2-120 intake,3-180 intake)": "Dr. Bob Lee",
+            "status": "not started",
+            "amount_received_rs": "20000",
+            "activities_conducted": "Introductory lectures, workshops",
+            "document": "blockchain_technology_program.pdf",
+            "createdAt": "2024-02-01T11:00:00Z"
+          }
+        ],
+        attributenames: ["id", "department", "emerging_technology", "topic", "International recognized certification authority with address", "duration", "start_date", "end_date", "faculty_name(1-60 intake,2-120 intake,3-180 intake)", "status", "amount_received_rs", "activities_conducted", "document", "createdAt"],
+        attributeTypes: {
+          'id': 'number',
+          'department': 'text',
+          'emerging_technology': 'text',
+          'topic': 'text',
+          'International recognized certification authority with address': 'text',
+          'duration': 'text',
+          'start_date': 'date',
+          'end_date': 'date',
+          'faculty_name(1-60 intake,2-120 intake,3-180 intake)': 'text',
+          'status': 'text',
+          'amount_received_rs': 'text',
+          'activities_conducted': 'text',
+          'document': 'text',
+          'createdAt': 'date'
+        }
+      }
+    }
+  ];
+  
+  
   const notifyFailure = (error) => {
     toast.error(error, {
       position: "top-center",
@@ -43,26 +225,21 @@ function OtherFormsRecords() {
     if (role === "IQAC") {
       setDept('All');
     }
-    const fetchLockStatus = async () => {
-      try {
-        const response = await axios.post('http://localhost:3000/tables/getlocktablestatus', { id: form.id, table: 'form_locks' });
-        setLockedstatus(response.data.is_locked);
-      } catch (error) {
-        console.error('Error fetching lock status:', error);
-        notifyFailure(error.response.data.error || 'Error fetching record');
-      }
-    };
-
+  
     const fetchData = async () => {
       try {
-        const response = await axios.post('http://localhost:3000/tables/gettable', { table: table, department: dept });
-        setData(response.data.data);
-        setOriginalData(response.data.data);
-        setAttributenames(Object.keys(response.data.columnDataTypes));
-        setAttributeTypes({
-          ...response.data.columnDataTypes,
-          ...{ 'document': 'file', 'website_link': 'link' }
-        });
+        // Match the correct form data from server_data based on table name
+        const formData = server_data.find(item => item[form.form_table_name]);
+        if (formData) {
+          const formContent = formData[form.form_table_name];
+          // Set the data, attribute names, and attribute types
+          setData(formContent.dummyData);
+          setOriginalData(formContent.dummyData);
+          setAttributenames(formContent.attributenames);
+          setAttributeTypes(formContent.attributeTypes);
+        } else {
+          throw new Error('Form data not found');
+        }
       } catch (err) {
         if (err.response && err.response.data) {
           notifyFailure(err.response.data);
@@ -71,13 +248,13 @@ function OtherFormsRecords() {
         }
         setData([]);
         setAttributenames([]);
-        setAttributeTypes([]);
+        setAttributeTypes({});
       }
     };
-
-    fetchLockStatus();
+  
     fetchData();
-  }, [dept]);
+  }, [dept, form.form_table_name, role]);
+  
 
   const handleEdit = (attributenames, item) => {
     if (lockedstatus) {

@@ -34,23 +34,32 @@ const OtherForms = () => {
 
     useEffect(() => {
         const fetchForms = async () => {
-            try {
-                const response = await axios.post('http://localhost:3000/forms/getformlist', {});
-                const formsData = response.data;
-                setForms(formsData);
-                console.log(response.data);
-                const initialLockStatus = formsData.reduce((acc, form) => {
-                    acc[form.id] = form.is_locked;
-                    return acc;
-                }, {});
-                setLockedStatus(initialLockStatus);
-            } catch (error) {
-                console.error('Error fetching forms:', error);
-            }
+            // Simulate fetching data and setting the forms state
+            setForms([
+                {
+                    id: 1,
+                    form_title: "Club Activities Form",
+                    is_locked: false,
+                    form_table_name: "Club_activities"
+                },
+                {
+                    id: 2,
+                    form_title: "Industrial Visits Form",
+                    is_locked: true,
+                    form_table_name: "Industrial_visits"
+                },
+                {
+                    id: 3,
+                    form_title: "Emerging Technologies Form",
+                    is_locked: false,
+                    form_table_name: "Emerging_technologies"
+                }
+            ]);
         };
-
+    
         fetchForms();
     }, []);
+    
     const handleLock = async (formId) => {
         Swal.fire({
             title: 'Do you want to change the lock status of this form?',

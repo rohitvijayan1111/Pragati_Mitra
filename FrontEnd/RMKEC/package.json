@@ -1,20 +1,22 @@
 {
   "name": "rmkec",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+      "predeploy": "npm run build",
+  "deploy": "gh-pages -d build -b deploy"
   },
   "dependencies": {
     "@date-io/date-fns": "^3.0.0",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@mui/icons-material": "^6.0.2",
-    "@mui/material": "^6.0.2",
+    "@mui/material": "^5.15.14",
+    "@mui/icons-material": "^5.x.x",
     "@mui/x-date-pickers": "^7.9.0",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
@@ -50,6 +52,7 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "gh-pages": "^6.1.1",
     "vite": "^5.2.0"
   }
 }

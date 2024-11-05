@@ -14,7 +14,19 @@ const SetDeadlinePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { formId, title, usersgroup = '' } = location.state || {};
-
+  const notifyFeatureUnavailable = () => {
+    toast.info('Could not host this feature. Kindly check the video link in the PPT for the functionality.', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Zoom,
+    });
+  };
   const [deadline, setDeadline] = useState(null);
   const [userGroup, setUserGroup] = useState(usersgroup);
   const [newUserGroup, setNewUserGroup] = useState('');
@@ -42,99 +54,12 @@ const SetDeadlinePage = () => {
   };
 
   const handleUpdateUserGroup = async () => {
-    try {
-      if (!newUserGroup.trim()) {
-        toast.error("No User mail entered", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          transition: Zoom,
-        });
-        return;
-      }
-
-      const updatedUserGroup = userGroup ? `${userGroup},${newUserGroup.trim()}` : newUserGroup.trim();
-      const response = await axios.post('http://localhost:3000/tables/updateusergroup', {
-        id: formId,
-        usergroup: updatedUserGroup,
-      });
-
-      setUserGroup(updatedUserGroup);
-      setNewUserGroup(''); // Clear the input after update
-      toast.success(response.data.message, {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Zoom,
-      });
-    } catch (error) {
-      toast.error(error.response?.data?.error || 'Error updating user group', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Zoom,
-      });
-    }
+    notifyFeatureUnavailable();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post('http://localhost:3000/tables/deadline', {
-        id: formId,
-        deadline: deadline,
-      });
-
-      if (userGroup) {
-        await axios.post('http://localhost:3000/mail/send', {
-          to: userGroup.split(",").map(email => email.trim()).filter(email => email),
-          subject: emailSubject,
-          desc: emailContent,
-        });
-      }
-
-      toast.success(response.data.message, {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Zoom,
-      });
-
-      navigate(-1);
-    } catch (error) {
-      toast.error(error.response?.data?.error || 'Error setting deadline', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Zoom,
-      });
-    }
+    notifyFeatureUnavailable();
   };
 
   const userGroupList = (userGroup || '').split(',').map(email => email.trim()).filter(email => email);

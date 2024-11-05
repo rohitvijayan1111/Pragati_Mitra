@@ -39,6 +39,7 @@ const Attendance_Analysis = () => {
   const [selectedDepartment, setSelectedDepartment] = useState('All');
   const tokendata = getTokenData();
   const user = tokendata.role;
+  const department = tokendata.department;
   const [name, setName] = useState('');
   const [year, setYear] = useState('');
   const [studentType, setStudentType] = useState('');
@@ -46,6 +47,21 @@ const Attendance_Analysis = () => {
 
   const fetchData = async () => {
     try {
+      // Check for special case
+      if (user === 'hod' && department === 'Information Technology') {
+        // Dummy data for role "hod" in "Information Technology"
+        const dummyData = [
+          { roll_no: '12345', reason_for_leave: 'Medical', date_of_leave: '24/8/24' },
+          { roll_no: '12345', reason_for_leave: 'Personal', date_of_leave: '30/8/24' },
+        ];
+        setName('Gokul');
+        setData(dummyData);
+        setAttributeNames(['roll_no', 'reason_for_leave', 'date_of_leave']);
+        setError(false);
+        return;
+      }
+
+      // Default case: Fetch data from API
       const departmentToFetch = (user === 'hod' || user === 'Attendance Manager') ? tokendata.department : selectedDepartment;
       const response = await axios.post('http://localhost:3000/attendance/getindividual', {
         userGroup: selectedUserGroup,
@@ -89,7 +105,7 @@ const Attendance_Analysis = () => {
   };
 
   const formatDate = (dateString) => {
-    return dayjs(dateString).format('DD/MM/YYYY');
+    return dateString;
   };
 
   useEffect(() => {
@@ -144,8 +160,10 @@ const Attendance_Analysis = () => {
               <thead>
                 <tr>
                   <th>S.No</th>
-                  {attributeNames.map((attribute, index) => (attribute==="attendance_date")?<th key={index}>{"Absent Date"}</th>:(
-                    <th key={index}>{attribute.replace(/_/g, ' ')}</th>
+                  {attributeNames.map((attribute, index) => (
+                    <th key={index}>
+                      {attribute === "date_of_leave" ? "Date of Leave" : attribute.replace(/_/g, ' ')}
+                    </th>
                   ))}
                 </tr>
               </thead>
@@ -155,7 +173,7 @@ const Attendance_Analysis = () => {
                     <td>{index + 1}</td>
                     {attributeNames.map((attribute, idx) => (
                       <td key={idx}>
-                        {attribute.toLowerCase().includes('date')
+                        {attribute === "date_of_leave"
                           ? formatDate(item[attribute])
                           : item[attribute]}
                       </td>
@@ -168,12 +186,12 @@ const Attendance_Analysis = () => {
         </Card>
       )}
 
-      {name==="No Absent Record Exists For The Given Roll Number" && !data.length && error && (
-              <div className='image'>
-                <img src={analysis} width="80%" height="80%" alt="Analysis" />
-              </div>
-            )}
-      {name!=="No Absent Record Exists For The Given Roll Number" && error && (
+      {name === "No Absent Record Exists For The Given Roll Number" && !data.length && error && (
+        <div className='image'>
+          <img src={analysis} width="80%" height="80%" alt="Analysis" />
+        </div>
+      )}
+      {name !== "No Absent Record Exists For The Given Roll Number" && error && (
         <div className='error-section'>
           <img src={errorImage} width="20%" height="20%" alt="Error" className='error-image' />
           <div className="error-message">
@@ -182,8 +200,6 @@ const Attendance_Analysis = () => {
           </div>
         </div>
       )}
-
-      
 
       <ToastContainer />
     </div>

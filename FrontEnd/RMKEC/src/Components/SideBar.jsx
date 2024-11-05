@@ -149,12 +149,12 @@ function SideBar() {
             </li>
           </>
         )}
-        <li className={isActive('/dashboard/faculty-details')}>
+        {/* <li className={isActive('/dashboard/faculty-details')}>
           <Link to="/dashboard/faculty-details">
             <img src={faculty} width="40px" height="40px" alt="Faculty Details" />
             Faculty Details
           </Link>
-        </li>
+        </li> */}
         <li className={isActive('/dashboard/mail')}>
           <Link to="/dashboard/mail">
             <img src={mail} width="40px" height="40px" alt="Mail" />

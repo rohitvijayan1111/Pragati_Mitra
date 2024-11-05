@@ -95,9 +95,9 @@ const Attendance_Log = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedHostellerDayScholar, setSelectedHostellerDayScholar] = useState('All');
-  const tokendata=getTokenData();
-  const user=tokendata.role;
-  const department=tokendata.department;
+  const tokendata = getTokenData();
+  const user = tokendata.role;
+  const department = tokendata.department;
   const [name, setName] = useState("");
 
   const fetchData = async () => {
@@ -106,6 +106,18 @@ const Attendance_Log = () => {
       const formattedDate2 = selectedDate ? selectedDate.format('DD-MM-YYYY') : null;
       const departmentToFetch = (user === 'hod' || user === 'Attendance Manager') ? department : selectedDepartment;
       console.log('Fetching data with department:', departmentToFetch);
+
+      if (user === 'hod') {
+        // Dummy data for role "hod"
+        const dummyData = [
+          { name: 'John Doe', RollNo: '11', attendance: 'Present' },
+          { name: 'Jane Smith', RollNo: '22', attendance: 'Absent' },
+        ];
+        setData(dummyData);
+        setAttributeNames(Object.keys(dummyData[0] || {}));
+        setName("Dummy Data for HOD");
+        return;
+      }
 
       const response = await axios.post('http://localhost:3000/attendance/fetchdatedata', {
         selectedUserGroup,
@@ -149,7 +161,6 @@ const Attendance_Log = () => {
     }
     fetchData();
   };
-  
 
   useEffect(() => {
     setData([]);
@@ -162,7 +173,6 @@ const Attendance_Log = () => {
         <UserGroupSelector setSelectedUserGroup={setSelectedUserGroup} />
         <HostellerDayScholarSelector setSelectedHostellerDayScholar={setSelectedHostellerDayScholar} />
         {(user !== 'hod' && user !== 'Attendance Manager') && <DepartmentSelector setSelectedDepartment={setSelectedDepartment} />}
-        {selectedUserGroup === "Student" && <HostellerDayScholarSelector setSelectedHostellerDayScholar={setSelectedHostellerDayScholar} />}
       </div>
       <div className='conte'>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -175,41 +185,40 @@ const Attendance_Log = () => {
         </LocalizationProvider>
         <input type='submit' value="Fetch" className='btm' onClick={handleFetchClick} />
       </div>
-      {name && 
+      {/* {name && 
         <div className='image'>
           <img src={log} width="70%" height="80%"/>
-        </div>}
+        </div>} */}
       {data.length > 0 && (
         <div className='ta'>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>S.No</th>
-              {attributeNames.map((attribute, index) => (
-                 <th key={index}>{attribute.replace(/_/g, ' ')}</th>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>S.No</th>
+                {attributeNames.map((attribute, index) => (
+                   <th key={index}>{attribute.replace(/_/g, ' ')}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {selectedUserGroup==="Student" && data.filter(item => selectedHostellerDayScholar === "All" || item.studentType === selectedHostellerDayScholar).map((item, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    {attributeNames.map((attribute, idx) => (
+                      <td key={idx}>{item[attribute]}</td>
+                    ))}
+                  </tr>
+                ))}
+              {selectedUserGroup!=="Student" && data.map((item, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  {attributeNames.map((attribute, idx) => (
+                    <td key={idx}>{item[attribute]}</td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          </thead>
-          <tbody>
-          {selectedUserGroup==="Student" && data.filter(item => selectedHostellerDayScholar === "All" || item.studentType === selectedHostellerDayScholar).map((item, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                {attributeNames.map((attribute, idx) => (
-                  <td key={idx}>{item[attribute]}</td>
-                ))}
-              </tr>
-            ))}
-            {selectedUserGroup!=="Student" && data.map((item, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                {attributeNames.map((attribute, idx) => (
-                  <td key={idx}>{item[attribute]}</td>
-                ))}
-              </tr>
-            ))}
-
-          </tbody>
-        </Table>
+            </tbody>
+          </Table>
         </div>
       )}
       <ToastContainer />

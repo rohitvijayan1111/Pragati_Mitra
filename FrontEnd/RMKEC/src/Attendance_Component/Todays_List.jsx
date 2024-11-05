@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Table } from 'react-bootstrap';
-import { ToastContainer, toast, Zoom } from 'react-toastify';
+import { ToastContainer, Zoom } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './Todays_List.css';
@@ -9,7 +8,12 @@ import withAuthorization from '../Components/WithAuthorization';
 import dayjs from 'dayjs';
 import present from '../assets/absent.png';
 
-import { getTokenData } from '../Pages/authUtils';
+// Dummy data
+const dummyData = [
+  { id: 1, name: 'Rohit', rollNumber: '12345', studentType: 'Hostel', department: 'Computer Science and Engineering' },
+  { id: 2, name: 'Gokul', rollNumber: '67890', studentType: 'Day Scholar', department: 'Electrical and Electronics Engineering' },
+  // Add more dummy entries as needed
+];
 
 const UserGroupSelector = ({ setSelectedUserGroup }) => {
   const [selectedUserGroup, setSelectedUserGroupState] = useState('Student');
@@ -78,50 +82,21 @@ const TypeSelector = ({ setSelectedType }) => {
 
 const Todays_List = () => {
   const [selectedUserGroup, setSelectedUserGroup] = useState('Student');
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(dummyData);
   const [attributeNames, setAttributeNames] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedType, setSelectedType] = useState('All');
   const [name, setName] = useState('');
-  const tokendata = getTokenData();
-  const user = tokendata.role;
-  const department = tokendata.department;
   const todayDate = dayjs().format('DD-MM-YYYY');
 
   useEffect(() => {
     if (selectedUserGroup) {
-      setData([]);
-      setAttributeNames([]);
-      fetchData();
+      setData(dummyData); // Use dummy data directly
+      const keys = extractAttributeNames(dummyData[0]);
+      setAttributeNames(keys);
+      setName(dummyData.length > 0 ? '' : 'No Absentees Today');
     }
   }, [selectedUserGroup, selectedDepartment, selectedType]);
-
-  const fetchData = async () => {
-    try {
-      const departmentToFetch = (user === 'hod' || user === 'Attendance Manager') ? department : selectedDepartment;
-      console.log('Fetching data with department:', departmentToFetch);
-
-      const response = await axios.post('http://localhost:3000/attendance/fetchtoday', {
-        selectedUserGroup,
-        department: departmentToFetch,
-        type: selectedType,
-      });
-
-      console.log('Response data:', response.data);
-      setData(response.data.data);
-      if (response.data.data && response.data.data.length > 0) {
-        const keys = extractAttributeNames(response.data.data[0]);
-        setAttributeNames(keys);
-        setName('');  
-      } else {
-        setName("No Absentees Today");
-        setAttributeNames([]);
-      }
-    } catch (error) {
-      setName(error.response?.data?.error);
-      console.error('Error fetching data:', error);
-    }
-  };
 
   const extractAttributeNames = (object) => {
     return Object.keys(object);
@@ -134,9 +109,7 @@ const Todays_List = () => {
         {selectedUserGroup === "Student" && (
           <TypeSelector setSelectedType={setSelectedType} />
         )}
-        {(user !== 'hod' && user !== 'Attendance Manager') && (
-          <DepartmentSelector setSelectedDepartment={setSelectedDepartment} />
-        )}
+        <DepartmentSelector setSelectedDepartment={setSelectedDepartment} />
       </div>
       {name && 
         <div className='image'>
@@ -153,7 +126,7 @@ const Todays_List = () => {
             </tr>
           </thead>
           <tbody>
-            {selectedUserGroup==="Student" && data.filter(item => selectedType === "All" || item.studentType === selectedType).map((item, index) => (
+            {selectedUserGroup === "Student" && data.filter(item => selectedType === "All" || item.studentType === selectedType).map((item, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 {attributeNames.map((attribute, idx) => (
@@ -161,7 +134,7 @@ const Todays_List = () => {
                 ))}
               </tr>
             ))}
-            {selectedUserGroup!=="Student" && data.map((item, index) => (
+            {selectedUserGroup !== "Student" && data.map((item, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 {attributeNames.map((attribute, idx) => (

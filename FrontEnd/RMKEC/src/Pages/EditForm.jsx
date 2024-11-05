@@ -33,7 +33,19 @@ const EditForm = () => {
       transition: Zoom,
     });
   };
-
+  const notifyFeatureUnavailable = () => {
+    toast.info('Could not host this feature. Kindly check the video link in the PPT for the functionality.', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Zoom,
+    });
+  };
   const notifyfailure = (error) => {
     toast.error(error, {
       position: "top-center",
@@ -104,41 +116,10 @@ const EditForm = () => {
       });
     }
   };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const formattedData = { ...data };
-      for (const attribute of attributenames) {
-        if (attributeTypes[attribute] === 'date' && formattedData[attribute]) {
-          formattedData[attribute] = dayjs(formattedData[attribute]).format('YYYY-MM-DD');
-        }
-      }
-  
-      const formData = new FormData();
-      formData.append('id', data.id);
-      formData.append('table', table);
-      formData.append('data', JSON.stringify(formattedData));
-  
-      // Handle file upload or deletion
-      if (selectedFile) {
-        formData.append('file', selectedFile);
-      } else if (data.document && data.document !== 'No file selected') {
-        formData.append('deleteFile', true); // Request to delete the existing file
-      }
-  
-      const response = await axios.post("http://localhost:3000/tables/updaterecord", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      // removeEmailFromNotSubmitted(formId,tokendata.email);
-      notifysuccess();
-      setTimeout(() => {
-        navigate(-1);
-      }, 1500);
-    } catch (error) {
-      notifyfailure(error.response?.data?.error || 'Error updating record');
-    }
+    notifyFeatureUnavailable();
   };
   return (
     <div className="cnt">
@@ -190,7 +171,7 @@ const EditForm = () => {
                       key={fileInputKey}
                       ref={fileInputRef} // Attach ref to file input
                       style={{ display: 'none' }}
-                      required={!data.document || data.document === 'No file selected'}
+                      
                     />
                   </div>
                 ) : (

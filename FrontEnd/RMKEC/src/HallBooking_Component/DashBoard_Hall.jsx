@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import EventDetails from './EventDetails';
 import { toast, ToastContainer, Zoom } from 'react-toastify';
 import dayjs from 'dayjs';
@@ -13,7 +12,7 @@ function DashBoard_Hall() {
   const [loading, setLoading] = useState(true);
   const tokendata = getTokenData();
   const user = tokendata.role;
-  const userDepartment = tokendata.department; 
+  const userDepartment = tokendata.department;
   const [name, setName] = useState("");
 
   const rolemapping = {
@@ -33,7 +32,7 @@ function DashBoard_Hall() {
       case 'principal':
         return 'cancelEventByPrincipal';
       case "Event Coordinator":
-        return 'cancelEventByEventCoordinator'
+        return 'cancelEventByEventCoordinator';
       default:
         throw new Error('Invalid user type');
     }
@@ -55,27 +54,23 @@ function DashBoard_Hall() {
 
   const handleDelete = async (event) => {
     try {
-      await axios.post('http://localhost:3000/hall/hall_requests_remove_admin', { id: event.id });
+      // Simulating the delete action
       setUpcomingEvents(upcomingEvents.filter((e) => e.id !== event.id));
       const endpoint = determineEndpoint(user);
       const formattedDate = dayjs(event.event_date).format('MMMM DD, YYYY');
       const formContent = `
-      Hall booking approval request for the event "${event.name}" scheduled on ${formattedDate} from ${event.start_time} to ${event.end_time} at ${event.hall_name} is cancelled by ${rolemapping[user]}.
-      Event Name: ${event.name}
-      Speaker: ${event.speaker}
-      Speaker Description: ${event.speaker_description}
-      Department: ${event.department}
-      Participants: ${event.participants}
-      In-charge Faculty: ${event.incharge_faculty}
-      Facilities Needed: ${event.facility_needed}
+        Hall booking approval request for the event "${event.name}" scheduled on ${formattedDate} from ${event.start_time} to ${event.end_time} at ${event.hall_name} is cancelled by ${rolemapping[user]}.
+        Event Name: ${event.name}
+        Speaker: ${event.speaker}
+        Speaker Description: ${event.speaker_description}
+        Department: ${event.department}
+        Participants: ${event.participants}
+        In-charge Faculty: ${event.incharge_faculty}
+        Facilities Needed: ${event.facility_needed}
       `;
 
-      await axios.post(`http://localhost:3000/mail/${endpoint}`, {
-        formSubject: formContent,
-        department: event.department,
-        emails: event.emails
-      });
-
+      // Simulating email sending
+      console.log(`Sending email to ${event.emails} with content:\n${formContent}`);
     } catch (error) {
       console.error('Error deleting event:', error);
       notifyFailure('Error deleting event');
@@ -83,40 +78,68 @@ function DashBoard_Hall() {
   };
 
   useEffect(() => {
-    async function fetchUpcomingEvents() {
-      try {
-        const response = await axios.get('http://localhost:3000/hall/upcoming-events');
-        setUpcomingEvents(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching upcoming events:', error);
-        if (error.response && error.response.data) {
-          console.log('Error message from backend:', error.response.data);
-          setName(error.response.data.error);
-
-        } else {
-          notifyFailure('An unexpected error occurred.');
+    // Dummy data
+    const dummyEvents = [
+      {
+        id: 1,
+        name: 'Annual Tech Conference',
+        speaker: 'Likesh ',
+        speaker_description: 'Expert in AI and Machine Learning',
+        event_date: '2024-10-05',
+        start_time: '10:00 AM',
+        end_time: '04:00 PM',
+        department: 'IT',
+        hall_name: 'Main Auditorium',
+        emails: ['example@domain.com'],
+        participants: 150,
+        incharge_faculty: 'Prof. Alice Johnson',
+        facility_needed: 'Projector, Microphone',
+        approvals: {
+          hod: true,
+          academic_coordinator: true,
+          principal: false
         }
-        setLoading(false);
+      },
+      {
+        id: 2,
+        name: 'Guest Lecture on Cybersecurity',
+        speaker: 'Rohit',
+        speaker_description: 'Cybersecurity Expert',
+        event_date: '2024-10-12',
+        start_time: '11:00 AM',
+        end_time: '01:00 PM',
+        department: 'CS',
+        hall_name: 'Room 101',
+        emails: ['another@example.com'],
+        participants: 80,
+        incharge_faculty: 'Dr. Robert Green',
+        facility_needed: 'None',
+        approvals: {
+          hod: true,
+          academic_coordinator: false,
+          principal: false
+        }
       }
-    }
+    ];
 
-    fetchUpcomingEvents();
+    setUpcomingEvents(dummyEvents);
+    setLoading(false);
   }, []);
-
-
 
   return (
     <div className="dashboard-hall">
       <h1>Upcoming Events</h1>
-      {upcomingEvents.length === 0 ? (
+      {loading ? (
+        <div className='loading'>
+          <p>Loading...</p>
+        </div>
+      ) : upcomingEvents.length === 0 ? (
         <div className='image'>
-          <img src={events} width="50%" height="50%"/>
+          <img src={events} width="50%" height="50%" alt="No events"/>
         </div>
       ) : (
         upcomingEvents.map((event, index) => {
-          const canCancel = 
-            event.department === userDepartment;
+          const canCancel = event.department === userDepartment;
 
           return (
             <div className="event-container" key={index}>
